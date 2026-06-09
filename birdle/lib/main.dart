@@ -40,6 +40,11 @@ class GamePage extends StatelessWidget {
                 for (final letter in guess) Tile(letter.char, letter.type),
               ],
             ),
+          GuessInput(
+            onSubmitGuess: (guess) {
+              print(guess);
+            },
+          ),
         ],
       ),
     );
@@ -72,6 +77,56 @@ class Tile extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
+    );
+  }
+}
+
+class GuessInput extends StatelessWidget {
+  GuessInput({super.key, required this.onSubmitGuess});
+
+  final void Function(String) onSubmitGuess;
+
+  final TextEditingController _textEditingController = TextEditingController();
+
+  final FocusNode _focusNode = FocusNode();
+
+  void submitGuess(String word) {
+    onSubmitGuess(word);
+    _textEditingController.clear();
+    _focusNode.requestFocus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: TextField(
+              controller: _textEditingController,
+              maxLength: 5,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(35)),
+                ),
+              ),
+              autofocus: true,
+              focusNode: _focusNode,
+              onSubmitted: (_) {
+                submitGuess(_textEditingController.text.trim());
+              },
+            ),
+          ),
+        ),
+        IconButton(
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.arrow_circle_up),
+          onPressed: () {
+            submitGuess(_textEditingController.text.trim());
+          },
+        ),
+      ],
     );
   }
 }
