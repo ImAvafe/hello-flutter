@@ -9,12 +9,12 @@
         "packageRef" : {
           "identity" : "flutterframework",
           "kind" : "fileSystem",
-          "location" : "/Users/avalynch/Git/hello-flutter/birdle/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework",
+          "location" : "/Users/avalynch/Git/hello-flutter/wikipedia_reader/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework",
           "name" : "FlutterFramework"
         },
         "state" : {
           "name" : "fileSystem",
-          "path" : "/Users/avalynch/Git/hello-flutter/birdle/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework"
+          "path" : "/Users/avalynch/Git/hello-flutter/wikipedia_reader/ios/Flutter/ephemeral/Packages/.packages/FlutterFramework"
         },
         "subpath" : "flutterframework"
       }
