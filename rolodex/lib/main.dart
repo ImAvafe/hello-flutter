@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'data/contact_group.dart';
+
+final contactGroupsModel = ContactGroupsModel();
 
 void main() {
   runApp(const RolodexApp());
