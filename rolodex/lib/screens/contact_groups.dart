@@ -1,13 +1,73 @@
 import 'package:flutter/cupertino.dart';
+import 'package:rolodex/data/contact.dart';
+import '../data/contact_group.dart';
+import '../main.dart';
 
 class ContactGroupsPage extends StatelessWidget {
   const ContactGroupsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.extraLightBackgroundGray,
-      child: Center(child: Text("contact groups here :p")),
+    return _ContactGroupsView(
+      selectedListId: 0,
+      onListSelected: (list) {
+        debugPrint(list.toString());
+      },
     );
   }
+}
+
+class _ContactGroupsView extends StatelessWidget {
+  const _ContactGroupsView({required this.onListSelected, this.selectedListId});
+
+  final int? selectedListId;
+  final void Function(ContactGroup) onListSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      backgroundColor: CupertinoColors.extraLightBackgroundGray,
+      child: CustomScrollView(
+        slivers: [
+          const CupertinoSliverNavigationBar(largeTitle: Text('Lists')),
+          SliverFillRemaining(
+            child: ValueListenableBuilder<List<ContactGroup>>(
+              valueListenable: contactGroupsModel.listsNotifier,
+              builder: (context, contactLists, child) {
+                return CupertinoListSection.insetGrouped(
+                  header: const Text('iPhone'),
+                  children: [
+                    for (final ContactGroup contactList in contactLists)
+                      CupertinoListTile(
+                        title: Text(contactList.label),
+                        trailing: _buildTrailing(contactList.contacts, context),
+                        onTap: () => onListSelected(contactList),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Widget _buildTrailing(List<Contact> contacts, BuildContext context) {
+  final TextStyle style = CupertinoTheme.of(
+    context,
+  ).textTheme.textStyle.copyWith(color: CupertinoColors.systemGrey);
+
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text(contacts.length.toString(), style: style),
+      const Icon(
+        CupertinoIcons.forward,
+        color: CupertinoColors.systemGrey3,
+        size: 18,
+      ),
+    ],
+  );
 }
